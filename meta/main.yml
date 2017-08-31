@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: APPUiO Team
+  description: Role to install and configure OpenShift ACME
+  company: Puzzle ITC and VSHN
+  license: Apache License, Version 2.0
+  min_ansible_version: 2.2
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  categories:
+  - cloud
+allow_duplicates: yes
+dependencies:
+- src: git+https://github.com/appuio/ansible-module-openshift.git
+  version: v1.3.4

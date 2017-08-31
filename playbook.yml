@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  gather_facts: False
+
+  roles:
+  - role: ansible-role-openshift-acme
