@@ -9,7 +9,7 @@ parameters:
 - description: Controller loglevel
   name: OPENSHIFT_ACME_LOGLEVEL
   value: "8"
-- description: 
+- description: Name of the service pointing to ACME controller
   name: OPENSHIFT_ACME_SELFSERVICENAME
   value: acme-controller
 - description: Docker Image of ACME controller
