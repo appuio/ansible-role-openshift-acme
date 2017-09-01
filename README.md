@@ -34,8 +34,24 @@ One of:
 
 ### ACME Let's Encrypt URLs
 
-* Staging: https://acme-staging.api.letsencrypt.org/directory
-* Live: https://acme-v01.api.letsencrypt.org/directory
+The role supports aliases for URLs. These aliases make future URL changes
+easier (i.e. ACME v2 endpoint). The following aliases are included by default:
+
+* `letsencrypt-staging`: https://acme-staging.api.letsencrypt.org/directory
+* `letsencrypt-production`: https://acme-v01.api.letsencrypt.org/directory
+
+Either alias can be used instead of an actual URL in
+`appuio_openshift_acme_endpoint`, i.e.:
+
+```
+appuio_openshift_acme_endpoint: letsencrypt-production
+```
+
+A URL may also be used directly, i.e.:
+
+```
+appuio_openshift_acme_endpoint: https://api.custom.example.com/
+```
 
 ### Docker Image
 
