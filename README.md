@@ -29,7 +29,6 @@ One of:
     dependencies:
     - src: git+https://github.com/appuio/ansible-role-openshift-acme
       version: v1.0.0
-        namespace: "acme-controller"
 
 ## Hints
 
