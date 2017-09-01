@@ -31,14 +31,6 @@ One of:
       version: v1.0.0
         namespace: "acme-controller"
 
-This repository also contains a playbook with allows to run the role manually.
-The playbook must be called from the parent directory of the checked out repository:
-
-```
-ansible-galaxy install -r ansible-role-openshift-acme/requirements.yml --roles-path ansible-role-openshift-acme/roles
-ansible-playbook ansible-role-openshift-acme/playbook.yml
-```
-
 ## Hints
 
 ### ACME Let's Encrypt URLs (`acme_url`)
