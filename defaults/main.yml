@@ -1,3 +1,6 @@
 ---
 appuio_openshift_acme_namespace: acme-controller
 appuio_openshift_acme_endpoint: https://acme-staging.api.letsencrypt.org/directory
+appuio_openshift_acme_loglevel: 8
+appuio_openshift_acme_docker_image: docker.io/appuio/openshift-acme
+appuio_openshift_acme_docker_image_tag: latest

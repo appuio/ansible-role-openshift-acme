@@ -9,9 +9,9 @@
     template: "{{ role_path }}/files/acme-controller-template.yml"
     arguments:
       OPENSHIFT_ACME_ACMEURL: "{{ appuio_openshift_acme_endpoint | mandatory }}"
-      OPENSHIFT_ACME_LOGLEVEL: "{{ appuio_openshift_acme_loglevel | default('8') }}"
-      DOCKER_IMAGE: "{{ appuio_openshift_acme_docker_image | default('docker.io/appuio/openshift-acme') }}"
-      DOCKER_IMAGE_TAG: "{{ appuio_openshift_acme_docker_image_tag | default('latest') }}"
+      OPENSHIFT_ACME_LOGLEVEL: "{{ appuio_openshift_acme_loglevel | mandatory }}"
+      DOCKER_IMAGE: "{{ appuio_openshift_acme_docker_image | mandatory }}"
+      DOCKER_IMAGE_TAG: "{{ appuio_openshift_acme_docker_image_tag | mandatory }}"
 
 - name: Cluster role assignement
   openshift_policy:
