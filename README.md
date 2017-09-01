@@ -11,12 +11,12 @@ One of:
 
 ## Role Variables
 
-| Name             | Default value                   | Description                            |
-|------------------|---------------------------------|----------------------------------------|
-| namespace        | None (Required)                 | Namespace to deploy the acme-controler |
-| acme_url         | Let's Encrypt Staging           | URL to ACME API endpoint               |
-| docker_image     | docker.io/appuio/openshift-acme | Docker Image to deploy                 |
-| docker_image_tag | latest                          | Tag of the Docker image to deploy      |
+| Name                                   | Default value                   | Description                             |
+|----------------------------------------|---------------------------------|-----------------------------------------|
+| appuio_openshift_acme_namespace        | acme-controller                 | Namespace to deploy the acme-controller |
+| appuio_openshift_acme_endpoint         | Let's Encrypt Staging           | URL to ACME API endpoint                |
+| appuio_openshift_acme_docker_image     | docker.io/appuio/openshift-acme | Docker Image to deploy                  |
+| appuio_openshift_acme_docker_image_tag | latest                          | Tag of the Docker image to deploy       |
 
 ## Dependencies
 
@@ -33,7 +33,7 @@ One of:
 
 ## Hints
 
-### ACME Let's Encrypt URLs (`acme_url`)
+### ACME Let's Encrypt URLs
 
 * Staging: https://acme-staging.api.letsencrypt.org/directory
 * Live: https://acme-v01.api.letsencrypt.org/directory
