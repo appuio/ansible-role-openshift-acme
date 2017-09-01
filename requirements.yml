@@ -1,2 +1,0 @@
-- src: git+https://github.com/appuio/ansible-module-openshift.git
-  version: v1.3.4

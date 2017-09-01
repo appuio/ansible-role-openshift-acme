@@ -1,20 +1,22 @@
 ---
 - name: Create project for ACME Controller
   openshift_project:
-    name: "{{ namespace }}"
+    name: "{{ appuio_openshift_acme_namespace }}"
 
 - name: Instantiate ACME Controller template
+  vars:
+    acmeurl: "{{ appuio_openshift_acme_endpoint_alias[appuio_openshift_acme_endpoint] | default(appuio_openshift_acme_endpoint) }}"
   openshift_resource:
-    namespace: "{{ namespace }}"
+    namespace: "{{ appuio_openshift_acme_namespace }}"
     template: "{{ role_path }}/files/acme-controller-template.yml"
     arguments:
-      OPENSHIFT_ACME_ACMEURL: "{{ acme_url | mandatory }}"
-      OPENSHIFT_ACME_LOGLEVEL: "{{ acme_loglevel | default('8') }}"
-      DOCKER_IMAGE: "{{ docker_image | default('docker.io/appuio/openshift-acme') }}"
-      DOCKER_IMAGE_TAG: "{{ docker_image_tag | default('latest') }}"
+      OPENSHIFT_ACME_ACMEURL: "{{ acmeurl | mandatory }}"
+      OPENSHIFT_ACME_LOGLEVEL: "{{ appuio_openshift_acme_loglevel | mandatory }}"
+      DOCKER_IMAGE: "{{ appuio_openshift_acme_docker_image | mandatory }}"
+      DOCKER_IMAGE_TAG: "{{ appuio_openshift_acme_docker_image_tag | mandatory }}"
 
 - name: Cluster role assignement
   openshift_policy:
     cluster_roles:
     - acme-controller
-    users: "system:serviceaccount:{{ namespace }}:acme-controller"
+    users: "system:serviceaccount:{{ appuio_openshift_acme_namespace }}:acme-controller"

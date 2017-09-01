@@ -11,12 +11,12 @@ One of:
 
 ## Role Variables
 
-| Name             | Default value                   | Description                            |
-|------------------|---------------------------------|----------------------------------------|
-| namespace        | None (Required)                 | Namespace to deploy the acme-controler |
-| acme_url         | Let's Encrypt Staging           | URL to ACME API endpoint               |
-| docker_image     | docker.io/appuio/openshift-acme | Docker Image to deploy                 |
-| docker_image_tag | latest                          | Tag of the Docker image to deploy      |
+| Name                                   | Default value                   | Description                             |
+|----------------------------------------|---------------------------------|-----------------------------------------|
+| appuio_openshift_acme_namespace        | acme-controller                 | Namespace to deploy the acme-controller |
+| appuio_openshift_acme_endpoint         | Let's Encrypt Staging           | URL to ACME API endpoint                |
+| appuio_openshift_acme_docker_image     | docker.io/appuio/openshift-acme | Docker Image to deploy                  |
+| appuio_openshift_acme_docker_image_tag | latest                          | Tag of the Docker image to deploy       |
 
 ## Dependencies
 
@@ -29,22 +29,29 @@ One of:
     dependencies:
     - src: git+https://github.com/appuio/ansible-role-openshift-acme
       version: v1.0.0
-        namespace: "acme-controller"
-
-This repository also contains a playbook with allows to run the role manually.
-The playbook must be called from the parent directory of the checked out repository:
-
-```
-ansible-galaxy install -r ansible-role-openshift-acme/requirements.yml --roles-path ansible-role-openshift-acme/roles
-ansible-playbook ansible-role-openshift-acme/playbook.yml
-```
 
 ## Hints
 
-### ACME Let's Encrypt URLs (`acme_url`)
+### ACME Let's Encrypt URLs
 
-* Staging: https://acme-staging.api.letsencrypt.org/directory
-* Live: https://acme-v01.api.letsencrypt.org/directory
+The role supports aliases for URLs. These aliases make future URL changes
+easier (i.e. ACME v2 endpoint). The following aliases are included by default:
+
+* `letsencrypt-staging`: https://acme-staging.api.letsencrypt.org/directory
+* `letsencrypt-production`: https://acme-v01.api.letsencrypt.org/directory
+
+Either alias can be used instead of an actual URL in
+`appuio_openshift_acme_endpoint`, i.e.:
+
+```
+appuio_openshift_acme_endpoint: letsencrypt-production
+```
+
+A URL may also be used directly, i.e.:
+
+```
+appuio_openshift_acme_endpoint: https://api.custom.example.com/
+```
 
 ### Docker Image
 
