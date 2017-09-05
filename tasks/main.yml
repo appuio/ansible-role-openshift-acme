@@ -39,4 +39,5 @@
   openshift_policy:
     cluster_roles:
     - acme-controller
-    users: "system:serviceaccount:{{ appuio_openshift_acme_namespace }}:acme-controller"
+    users:
+    - "system:serviceaccount:{{ appuio_openshift_acme_namespace }}:acme-controller"
