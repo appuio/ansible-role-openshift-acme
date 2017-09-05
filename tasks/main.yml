@@ -3,17 +3,37 @@
   openshift_project:
     name: "{{ appuio_openshift_acme_namespace }}"
 
+- name: Create temp directory for doing work in
+  command: mktemp -d /tmp/ansible-acme-XXXXXXXX
+  register: mktemp
+  changed_when: False
+
+- set_fact:
+    tempdir: "{{ mktemp.stdout }}"
+
+- name: Copy template
+  copy:
+    src: "{{ role_path }}/files/acme-controller-template.yml"
+    dest: "{{ tempdir }}/template.yml"
+  changed_when: False
+
 - name: Instantiate ACME Controller template
   vars:
     acmeurl: "{{ appuio_openshift_acme_endpoint_alias[appuio_openshift_acme_endpoint] | default(appuio_openshift_acme_endpoint) }}"
   openshift_resource:
     namespace: "{{ appuio_openshift_acme_namespace }}"
-    template: "{{ role_path }}/files/acme-controller-template.yml"
+    template: "{{ tempdir }}/template.yml"
     arguments:
       OPENSHIFT_ACME_ACMEURL: "{{ acmeurl | mandatory }}"
       OPENSHIFT_ACME_LOGLEVEL: "{{ appuio_openshift_acme_loglevel | mandatory }}"
       DOCKER_IMAGE: "{{ appuio_openshift_acme_docker_image | mandatory }}"
       DOCKER_IMAGE_TAG: "{{ appuio_openshift_acme_docker_image_tag | mandatory }}"
+
+- name: Delete temp directory
+  file:
+    name: "{{ tempdir }}"
+    state: absent
+  changed_when: False
 
 - name: Cluster role assignement
   openshift_policy:
