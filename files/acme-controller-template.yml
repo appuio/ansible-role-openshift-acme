@@ -9,12 +9,9 @@ parameters:
 - description: Controller loglevel
   name: OPENSHIFT_ACME_LOGLEVEL
   value: "8"
-- description: Name of the service pointing to ACME controller
-  name: OPENSHIFT_ACME_SELFSERVICENAME
-  value: acme-controller
 - description: Docker Image of ACME controller
   name: DOCKER_IMAGE
-  value: docker.io/appuio/openshift-acme
+  value: docker.io/tnozicka/openshift-acme
 - description: Docker Image Tag of ACME controller
   name: DOCKER_IMAGE_TAG
   value: latest
@@ -23,39 +20,78 @@ objects:
   kind: ClusterRole
   metadata:
     name: acme-controller
+    labels:
+      app: acme-controller
   rules:
   - apiGroups:
-    - ""
     - "route.openshift.io"
     resources:
-    - endpoints
-    - endpoints/restricted
-    - events
     - routes
-    - routes/custom-host
-    - routes/status
-    - secrets
-    - services
+    - routes/finalizers
     verbs:
-    - '*'
-  - apiGroups:
-    - ""
-    resources:
-    - namespaces
-    verbs:
+    - create
     - get
     - list
     - watch
+    - update
+    - patch
+    - delete
+  - apiGroups:
+    - "route.openshift.io"
+    resources:
+    - routes/custom-host
+    verbs:
+    - create
+    - update
+    - delete
+    - patch
+  - apiGroups:
+    - ""
+    resources:
+    - events
+    verbs:
+    - create
+    - update
+    - patch
+  - apiGroups:
+    - ""
+    resources:
+    - endpoints
+    - endpoints/restricted
+    - services
+    verbs:
+    - create
+    - get
+    - list
+    - watch
+    - update
+    - patch
+    - delete
+  - apiGroups:
+    - ""
+    resources:
+    - secrets
+    - secrets/finalizers
+    verbs:
+    - create
+    - get
+    - list
+    - watch
+    - update
+    - patch
+    - delete
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
     name: acme-controller
+    labels:
+      app: acme-controller
 - apiVersion: v1
   kind: ImageStream
   metadata:
     name: acme-controller
     labels:
-      type: acme-controller
+      app: acme-controller
   spec:
     lookupPolicy:
       local: false
@@ -93,18 +129,19 @@ objects:
       spec:
         containers:
         - env:
+          - name: OPENSHIFT_ACME_EXPOSER_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
           - name: OPENSHIFT_ACME_ACMEURL
             value: ${OPENSHIFT_ACME_ACMEURL}
           - name: OPENSHIFT_ACME_LOGLEVEL
             value: ${OPENSHIFT_ACME_LOGLEVEL}
-          - name: OPENSHIFT_ACME_SELFSERVICENAME
-            value: ${OPENSHIFT_ACME_SELFSERVICENAME}
           image: acme-controller:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           name: acme-controller
           ports:
-          - containerPort: 80
-            protocol: TCP
+          - containerPort: 5000
           resources:
             limits:
               cpu: '500m'
@@ -147,15 +184,3 @@ objects:
           kind: ImageStreamTag
           name: acme-controller:latest
     - type: ConfigChange
-- apiVersion: v1
-  kind: Service
-  metadata:
-    name: acme-controller
-  spec:
-    ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 5000
-    selector:
-      app: acme-controller
