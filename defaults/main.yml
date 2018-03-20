@@ -7,3 +7,4 @@ appuio_openshift_acme_endpoint_alias:
 appuio_openshift_acme_loglevel: 8
 appuio_openshift_acme_docker_image: docker.io/tnozicka/openshift-acme
 appuio_openshift_acme_docker_image_tag: latest
+appuio_openshift_acme_replicas: 1
