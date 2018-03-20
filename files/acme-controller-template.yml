@@ -15,6 +15,8 @@ parameters:
 - description: Docker Image Tag of ACME controller
   name: DOCKER_IMAGE_TAG
   value: latest
+- name: REPLICA_COUNT
+  value: 1
 objects:
 - apiVersion: v1
   kind: ClusterRole
@@ -113,7 +115,7 @@ objects:
       app: acme-controller
     name: acme-controller
   spec:
-    replicas: 1
+    replicas: ${REPLICA_COUNT}
     selector:
       app: acme-controller
     strategy:
