@@ -17,6 +17,7 @@ One of:
 | appuio_openshift_acme_endpoint         | Let's Encrypt Staging           | URL to ACME API endpoint                |
 | appuio_openshift_acme_docker_image     | docker.io/appuio/openshift-acme | Docker Image to deploy                  |
 | appuio_openshift_acme_docker_image_tag | latest                          | Tag of the Docker image to deploy       |
+| appuio_openshift_acme_replicas         | 1                               | Number of replicas to run               |
 
 ## Dependencies
 
