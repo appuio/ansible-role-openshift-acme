@@ -115,7 +115,7 @@ objects:
       app: acme-controller
     name: acme-controller
   spec:
-    replicas: ${REPLICA_COUNT}
+    replicas: ${{REPLICA_COUNT}}
     selector:
       app: acme-controller
     strategy:
