@@ -2,8 +2,8 @@
 appuio_openshift_acme_namespace: acme-controller
 appuio_openshift_acme_endpoint: letsencrypt-staging
 appuio_openshift_acme_endpoint_alias:
-  letsencrypt-staging: https://acme-staging.api.letsencrypt.org/directory
-  letsencrypt-production: https://acme-v01.api.letsencrypt.org/directory
+  letsencrypt-staging: https://acme-staging-v02.api.letsencrypt.org/directory
+  letsencrypt-production: https://acme-v02.api.letsencrypt.org/directory
 appuio_openshift_acme_loglevel: 8
-appuio_openshift_acme_docker_image: docker.io/tnozicka/openshift-acme
-appuio_openshift_acme_docker_image_tag: latest
+appuio_openshift_acme_docker_image: quay.io/tnozicka/openshift-acme
+appuio_openshift_acme_docker_image_tag: controller

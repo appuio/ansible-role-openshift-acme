@@ -5,16 +5,16 @@ metadata:
 parameters:
 - description: ACME Endpoint URL
   name: OPENSHIFT_ACME_ACMEURL
-  value: https://acme-staging.api.letsencrypt.org/directory
+  value: https://acme-staging-v02.api.letsencrypt.org/directory
 - description: Controller loglevel
   name: OPENSHIFT_ACME_LOGLEVEL
   value: "8"
 - description: Docker Image of ACME controller
   name: DOCKER_IMAGE
-  value: docker.io/tnozicka/openshift-acme
+  value: quay.io/tnozicka/openshift-acme
 - description: Docker Image Tag of ACME controller
   name: DOCKER_IMAGE_TAG
-  value: latest
+  value: controller
 objects:
 - apiVersion: v1
   kind: ClusterRole
@@ -42,23 +42,12 @@ objects:
     - routes/custom-host
     verbs:
     - create
-    - update
-    - delete
-    - patch
   - apiGroups:
     - ""
     resources:
-    - events
-    verbs:
-    - create
-    - update
-    - patch
-  - apiGroups:
-    - ""
-    resources:
-    - endpoints
-    - endpoints/restricted
+    - configmaps
     - services
+    - secrets
     verbs:
     - create
     - get
@@ -70,8 +59,15 @@ objects:
   - apiGroups:
     - ""
     resources:
-    - secrets
-    - secrets/finalizers
+    - events
+    verbs:
+    - create
+    - update
+    - patch
+  - apiGroups:
+    - "apps"
+    resources:
+    - replicasets
     verbs:
     - create
     - get
@@ -117,10 +113,6 @@ objects:
     selector:
       app: acme-controller
     strategy:
-      activeDeadlineSeconds: 21600
-      recreateParams:
-        timeoutSeconds: 600
-      resources: {}
       type: Recreate
     template:
       metadata:
@@ -128,20 +120,12 @@ objects:
           app: acme-controller
       spec:
         containers:
-        - env:
-          - name: OPENSHIFT_ACME_EXPOSER_IP
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
-          - name: OPENSHIFT_ACME_ACMEURL
-            value: ${OPENSHIFT_ACME_ACMEURL}
-          - name: OPENSHIFT_ACME_LOGLEVEL
-            value: ${OPENSHIFT_ACME_LOGLEVEL}
+        - name: acme-controller
           image: acme-controller:latest
           imagePullPolicy: Always
-          name: acme-controller
-          ports:
-          - containerPort: 5000
+          args:
+          - --exposer-image=quay.io/tnozicka/openshift-acme:exposer
+          - --loglevel=${OPENSHIFT_ACME_LOGLEVEL}
           resources:
             limits:
               cpu: '500m'
@@ -149,31 +133,7 @@ objects:
             requests:
               cpu: '500m'
               memory: '512Mi'
-          livenessProbe:
-            tcpSocket:
-              port: 5000
-            initialDelaySeconds: 10
-            timeoutSeconds: 2
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
-          readinessProbe:
-            tcpSocket:
-              port: 5000
-            initialDelaySeconds: 10
-            timeoutSeconds: 2
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-        dnsPolicy: ClusterFirst
-        restartPolicy: Always
-        schedulerName: default-scheduler
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
         serviceAccountName: acme-controller
-    test: false
     triggers:
     - type: ImageChange
       imageChangeParams:
