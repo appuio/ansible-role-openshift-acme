@@ -25,10 +25,9 @@
     template: "{{ tempdir }}/template.yml"
     arguments:
       OPENSHIFT_ACME_ACMEURL: "{{ acmeurl | mandatory }}"
-      OPENSHIFT_ACME_LOGLEVEL: "{{ appuio_openshift_acme_loglevel | mandatory }}"
+      OPENSHIFT_ACME_LOGLEVEL: "{{ appuio_openshift_acme_loglevel }}"
       DOCKER_IMAGE: "{{ appuio_openshift_acme_docker_image | mandatory }}"
       DOCKER_IMAGE_TAG: "{{ appuio_openshift_acme_docker_image_tag | mandatory }}"
-      REPLICA_COUNT: "{{ appuio_openshift_acme_replicas | mandatory }}"
 
 - name: Delete temp directory
   file:
