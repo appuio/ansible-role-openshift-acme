@@ -6,18 +6,16 @@ This Ansible role installs and configures the [OpenShift ACME controller](https:
 
 One of:
 
-* OpenShift Container Platform 3.5 or later
-* OpenShift Origin 1.5 or later
+* OpenShift Container Platform 3.11 or later
 
 ## Role Variables
 
-| Name                                   | Default value                   | Description                             |
-|----------------------------------------|---------------------------------|-----------------------------------------|
-| appuio_openshift_acme_namespace        | acme-controller                 | Namespace to deploy the acme-controller |
-| appuio_openshift_acme_endpoint         | Let's Encrypt Staging           | URL to ACME API endpoint                |
-| appuio_openshift_acme_docker_image     | docker.io/appuio/openshift-acme | Docker Image to deploy                  |
-| appuio_openshift_acme_docker_image_tag | latest                          | Tag of the Docker image to deploy       |
-| appuio_openshift_acme_replicas         | 1                               | Number of replicas to run               |
+| Name                                   | Default value                     | Description                             |
+|----------------------------------------|-----------------------------------|-----------------------------------------|
+| appuio_openshift_acme_namespace        | `acme-controller`                 | Namespace to deploy the acme-controller |
+| appuio_openshift_acme_endpoint         | `letsencrypt-staging`             | URL to ACME API endpoint                |
+| appuio_openshift_acme_docker_image     | `quay.io/tnozicka/openshift-acme` | Docker Image to deploy                  |
+| appuio_openshift_acme_docker_image_tag | `controller`                      | Tag of the Docker image to deploy       |
 
 ## Dependencies
 
@@ -29,17 +27,17 @@ One of:
 
     dependencies:
     - src: git+https://github.com/appuio/ansible-role-openshift-acme
-      version: v1.0.0
+      version: v1.5.0
 
 ## Hints
 
 ### ACME Let's Encrypt URLs
 
 The role supports aliases for URLs. These aliases make future URL changes
-easier (i.e. ACME v2 endpoint). The following aliases are included by default:
+easier. The following aliases are included by default:
 
-* `letsencrypt-staging`: https://acme-staging.api.letsencrypt.org/directory
-* `letsencrypt-production`: https://acme-v01.api.letsencrypt.org/directory
+* `letsencrypt-staging`: https://acme-staging-v02.api.letsencrypt.org/directory
+* `letsencrypt-production`: https://acme-v02.api.letsencrypt.org/directory
 
 Either alias can be used instead of an actual URL in
 `appuio_openshift_acme_endpoint`, i.e.:
@@ -53,15 +51,6 @@ A URL may also be used directly, i.e.:
 ```
 appuio_openshift_acme_endpoint: https://api.custom.example.com/
 ```
-
-### Docker Image
-
-There is a custom built docker image which is using the official golang image.
-It's linked to the golang repository, so if there are updates, it will automatically
-get rebuilt.
-
-* Source: https://github.com/appuio/openshift-acme-docker
-* Docker Hub: https://hub.docker.com/r/appuio/openshift-acme
 
 ### OpenShift template
 
