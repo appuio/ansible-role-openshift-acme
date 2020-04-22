@@ -7,7 +7,6 @@ parameters:
   name: OPENSHIFT_ACME_ACMEURL
 - description: Controller loglevel
   name: OPENSHIFT_ACME_LOGLEVEL
-  value: "8"
 - description: Docker Image of ACME controller
   name: DOCKER_IMAGE
 - description: Docker Image Tag of ACME controller
@@ -33,6 +32,7 @@ objects:
     - update
     - patch
     - delete
+    - deletecollection
   - apiGroups:
     - "route.openshift.io"
     resources:
@@ -73,6 +73,23 @@ objects:
     - update
     - patch
     - delete
+- kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: letsencrypt-issuer
+    annotations:
+      "acme.openshift.io/priority": "100"
+    labels:
+      managed-by: "openshift-acme"
+      type: "CertIssuer"
+  data:
+    "cert-issuer.types.acme.openshift.io": |
+      {
+        "type": "ACME",
+        "acmeCertIssuer": {
+          "directoryUrl": "${OPENSHIFT_ACME_ACMEURL}"
+        }
+      }
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
