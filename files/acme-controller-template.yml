@@ -7,7 +7,6 @@ parameters:
   name: OPENSHIFT_ACME_ACMEURL
 - description: Controller loglevel
   name: OPENSHIFT_ACME_LOGLEVEL
-  value: "8"
 - description: Docker Image of ACME controller
   name: DOCKER_IMAGE
 - description: Docker Image Tag of ACME controller

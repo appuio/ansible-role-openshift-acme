@@ -16,6 +16,7 @@ One of:
 | appuio_openshift_acme_endpoint         | `letsencrypt-staging`             | URL to ACME API endpoint                |
 | appuio_openshift_acme_docker_image     | `quay.io/tnozicka/openshift-acme` | Docker Image to deploy                  |
 | appuio_openshift_acme_docker_image_tag | `controller`                      | Tag of the Docker image to deploy       |
+| appuio_openshift_acme_loglevel         | `4`                               | Loglevel (0-10)                         |
 
 ## Dependencies
 
