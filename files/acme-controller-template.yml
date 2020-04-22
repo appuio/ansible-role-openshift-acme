@@ -32,6 +32,7 @@ objects:
     - update
     - patch
     - delete
+    - deletecollection
   - apiGroups:
     - "route.openshift.io"
     resources:
