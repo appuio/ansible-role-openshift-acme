@@ -62,6 +62,14 @@ objects:
     - update
     - patch
   - apiGroups:
+    - ""
+    resources:
+    - limitranges
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
     - "apps"
     resources:
     - replicasets
