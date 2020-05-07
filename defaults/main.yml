@@ -6,4 +6,6 @@ appuio_openshift_acme_endpoint_alias:
   letsencrypt-production: https://acme-v02.api.letsencrypt.org/directory
 appuio_openshift_acme_loglevel: "4"
 appuio_openshift_acme_docker_image: quay.io/tnozicka/openshift-acme
-appuio_openshift_acme_docker_image_tag: controller
+appuio_openshift_acme_docker_image_tag: controller-0.9
+appuio_openshift_acme_exposer_image: quay.io/tnozicka/openshift-acme
+appuio_openshift_acme_exposer_image_tag: exposer-0.9

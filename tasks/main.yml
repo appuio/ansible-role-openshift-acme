@@ -28,6 +28,8 @@
       OPENSHIFT_ACME_LOGLEVEL: "{{ appuio_openshift_acme_loglevel }}"
       DOCKER_IMAGE: "{{ appuio_openshift_acme_docker_image | mandatory }}"
       DOCKER_IMAGE_TAG: "{{ appuio_openshift_acme_docker_image_tag | mandatory }}"
+      EXPOSER_IMAGE: "{{ appuio_openshift_acme_exposer_image | mandatory }}"
+      EXPOSER_IMAGE_TAG: "{{ appuio_openshift_acme_exposer_image_tag | mandatory }}"
 
 - name: Delete temp directory
   file:
