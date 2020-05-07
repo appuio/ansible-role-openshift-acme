@@ -11,6 +11,10 @@ parameters:
   name: DOCKER_IMAGE
 - description: Docker Image Tag of ACME controller
   name: DOCKER_IMAGE_TAG
+- description: Docker Image of ACME challenge exposer
+  name: EXPOSER_IMAGE
+- description: Docker Image Tag of ACME challenge exposer
+  name: EXPOSER_IMAGE_TAG
 objects:
 - apiVersion: v1
   kind: ClusterRole
@@ -121,7 +125,7 @@ objects:
         name: ${DOCKER_IMAGE}:${DOCKER_IMAGE_TAG}
       importPolicy:
         scheduled: true
-      name: latest
+      name: ${DOCKER_IMAGE_TAG}
       referencePolicy:
         type: Source
 - apiVersion: v1
@@ -143,10 +147,10 @@ objects:
       spec:
         containers:
         - name: acme-controller
-          image: acme-controller:latest
+          image: acme-controller:${DOCKER_IMAGE_TAG}
           imagePullPolicy: Always
           args:
-          - --exposer-image=quay.io/tnozicka/openshift-acme:exposer
+          - --exposer-image=${EXPOSER_IMAGE}:${EXPOSER_IMAGE_TAG}
           - --loglevel=${OPENSHIFT_ACME_LOGLEVEL}
           resources:
             limits:
