@@ -168,5 +168,5 @@ objects:
         - acme-controller
         from:
           kind: ImageStreamTag
-          name: acme-controller:latest
+          name: acme-controller:${DOCKER_IMAGE_TAG}
     - type: ConfigChange
