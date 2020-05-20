@@ -154,11 +154,11 @@ objects:
           - --loglevel=${OPENSHIFT_ACME_LOGLEVEL}
           resources:
             limits:
-              cpu: '500m'
+              cpu: '100m'
               memory: '512Mi'
             requests:
-              cpu: '500m'
-              memory: '512Mi'
+              cpu: '20m'
+              memory: '192Mi'
         serviceAccountName: acme-controller
     triggers:
     - type: ImageChange
