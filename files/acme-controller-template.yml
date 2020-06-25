@@ -15,6 +15,12 @@ parameters:
   name: EXPOSER_IMAGE
 - description: Docker Image Tag of ACME challenge exposer
   name: EXPOSER_IMAGE_TAG
+- description: HTTP proxy host
+  name: HTTP_PROXY
+  value: ""
+- description: HTTP proxy exclusions
+  name: NO_PROXY
+  value: ""
 objects:
 - apiVersion: v1
   kind: ClusterRole
@@ -159,6 +165,13 @@ objects:
             requests:
               cpu: '20m'
               memory: '192Mi'
+          env:
+            - name: HTTP_PROXY
+              value: ${HTTP_PROXY}
+            - name: HTTPS_PROXY
+              value: ${HTTP_PROXY}
+            - name: NO_PROXY
+              value: ${NO_PROXY}
         serviceAccountName: acme-controller
     triggers:
     - type: ImageChange

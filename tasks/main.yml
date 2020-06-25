@@ -30,6 +30,8 @@
       DOCKER_IMAGE_TAG: "{{ appuio_openshift_acme_docker_image_tag | mandatory }}"
       EXPOSER_IMAGE: "{{ appuio_openshift_acme_exposer_image | mandatory }}"
       EXPOSER_IMAGE_TAG: "{{ appuio_openshift_acme_exposer_image_tag | mandatory }}"
+      HTTP_PROXY: "{{ appuio_openshift_acme_http_proxy | default(omit) }}"
+      NO_PROXY: "{{ appuio_openshift_acme_no_proxy | default(omit) }}"
 
 - name: Delete temp directory
   file:
