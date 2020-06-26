@@ -17,6 +17,8 @@ One of:
 | appuio_openshift_acme_docker_image     | `quay.io/tnozicka/openshift-acme` | Docker Image to deploy                  |
 | appuio_openshift_acme_docker_image_tag | `controller`                      | Tag of the Docker image to deploy       |
 | appuio_openshift_acme_loglevel         | `4`                               | Loglevel (0-10)                         |
+| appuio_openshift_acme_http_proxy       | `''`                              | HTTP and HTTPS proxy                    |
+| appuio_openshift_acme_no_proxy         | `''`                              | List of domain elements or IP addresses |
 
 ## Dependencies
 
