@@ -21,6 +21,8 @@ parameters:
 - description: HTTP proxy exclusions
   name: NO_PROXY
   value: ""
+- description: Default RSA key bit size for new certificates
+  name: RSA_KEY_BIT_SIZE
 objects:
 - apiVersion: v1
   kind: ClusterRole
@@ -158,6 +160,7 @@ objects:
           args:
           - --exposer-image=${EXPOSER_IMAGE}:${EXPOSER_IMAGE_TAG}
           - --loglevel=${OPENSHIFT_ACME_LOGLEVEL}
+          - --cert-default-rsa-key-bit-size=${RSA_KEY_BIT_SIZE}
           resources:
             limits:
               cpu: '100m'

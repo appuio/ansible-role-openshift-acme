@@ -32,6 +32,7 @@
       EXPOSER_IMAGE_TAG: "{{ appuio_openshift_acme_exposer_image_tag | mandatory }}"
       HTTP_PROXY: "{{ appuio_openshift_acme_http_proxy | default(omit) }}"
       NO_PROXY: "{{ appuio_openshift_acme_no_proxy | default(omit) }}"
+      RSA_KEY_BIT_SIZE: "{{ appuio_openshift_acme_default_rsa_key_bit_size | mandatory }}"
 
 - name: Delete temp directory
   file:
