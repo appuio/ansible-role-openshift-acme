@@ -23,6 +23,14 @@ parameters:
   value: ""
 - description: Default RSA key bit size for new certificates
   name: RSA_KEY_BIT_SIZE
+- description: Controller CPU requests
+  name: CONTROLLER_CPU_REQUESTS
+- description: Controller CPU limits
+  name: CONTROLLER_CPU_LIMITS
+- description: Controller memory requests
+  name: CONTROLLER_MEMORY_REQUESTS
+- description: Controller memory limits
+  name: CONTROLLER_MEMORY_LIMITS
 objects:
 - apiVersion: v1
   kind: ClusterRole
@@ -163,11 +171,11 @@ objects:
           - --cert-default-rsa-key-bit-size=${RSA_KEY_BIT_SIZE}
           resources:
             limits:
-              cpu: '100m'
-              memory: '512Mi'
+              cpu: ${CONTROLLER_CPU_LIMITS}
+              memory: ${CONTROLLER_MEMORY_LIMITS}
             requests:
-              cpu: '20m'
-              memory: '192Mi'
+              cpu: ${CONTROLLER_CPU_REQUESTS}
+              memory: ${CONTROLLER_MEMORY_REQUESTS}
           env:
             - name: HTTP_PROXY
               value: ${HTTP_PROXY}

@@ -33,6 +33,10 @@
       HTTP_PROXY: "{{ appuio_openshift_acme_http_proxy | default(omit) }}"
       NO_PROXY: "{{ appuio_openshift_acme_no_proxy | default(omit) }}"
       RSA_KEY_BIT_SIZE: "{{ appuio_openshift_acme_default_rsa_key_bit_size | mandatory }}"
+      CONTROLLER_CPU_REQUESTS: "{{ appuio_openshift_acme_controller_cpu_requests | mandatory }}"
+      CONTROLLER_CPU_LIMIITS: "{{ appuio_openshift_acme_controller_cpu_limits | mandatory }}"
+      CONTROLLER_MEMORY_REQUESTS: "{{ appuio_openshift_acme_controller_memory_requests | mandatory }}"
+      CONTROLLER_MEMORY_LIMITS: "{{ appuio_openshift_acme_controller_memory_limits | mandatory }}"
 
 - name: Delete temp directory
   file:
